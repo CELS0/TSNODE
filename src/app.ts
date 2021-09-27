@@ -14,20 +14,23 @@ class App {
         this.database();
         this.routes();
     }
-s
+    s
     private middleware(): void {
         this.express.use(express.json());
         this.express.use(cors());
     }
 
     private database(): void {
-        mongoose.connect('mongodb://localhost;27017/tsnode', {
+        mongoose.connect('mongodb://localhost:27017/tsnode', {
             useNewUrlParser: true
         })
+        
+        mongoose.connection.on('error', () => console.error('connection error:'))
+        mongoose.connection.once('open', () => console.log('database connected'))
     }
     private routes(): void {
         this.express.use(router);
-      }
+    }
 }
 
 export default new App().express
